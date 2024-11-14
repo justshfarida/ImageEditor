@@ -9,10 +9,10 @@ class HomeView(TemplateView):
     '''
     Sets the home page.
     '''
-    template_name = 'ImageEditor/templates/index.html'
+    template_name = 'index.html'
 
 class AboutView(TemplateView):
     '''
     Sets the about page.
     '''
-    template_name = 'ImageEditor/templates/about.html'
+    template_name = 'about.html'
