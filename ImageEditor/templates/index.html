@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+Home
+{% endblock title %}
+{% block body %}
+<div class="container home-section">
+    <div class="container-fluid home-section--flex-column">
+        <div>
+            {% load static %}
+            <img src="{% static 'images/logo.png' %}" alt="imgman-logo">
+        </div>
+
+        <div>
+            <p class="home-section__content">This image editor allows users to apply unique filters, resize images, make video compilations, apply steganography and pick a color palette based on your image.</p>
+        </div>
+    </div>
+    
+    <div class="images">
+        <p class="images__title">Uploaded Base Image:</p>
+        <img class="images__image" src="{% static 'images/img-manipulation/base-img.jpg' %}" alt="base-image">
+        <div>
+            <p class="images__title">Results: </p>
+            <img class="images__image--result" src="{% static 'images/img-manipulation/gray.png' %}" alt="gray-image">
+            <img class="images__image--result" src="{% static 'images/img-manipulation/blur.png' %}" alt="blur-image">
+            <img class="images__image--result" src="{% static 'images/img-manipulation/black.png' %}" alt="black-image">
+            <img class="images__image--result" src="{% static 'images/img-manipulation/tint.png' %}" alt="tint-image">
+        </div>
+    </div>
+
+</div>
+{% endblock body %}

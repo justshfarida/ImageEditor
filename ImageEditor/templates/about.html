@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="row about-section full-width">
+    <div class="flex-child">
+        <h1>About IMGMAN</h1>
+        <p class="text">
+            IMGMAN is a unique web app which provides a myriad of image manipulation options
+            such as image blurring, black and white filters, converting to pdf, adding
+            grayscale effect, and resizing the image. It's built with Django, a Python web framework.
+        </p>
+    </div>
+    <div class="flex-child">
+        <img class="flex-child__img" src="../static/images/logo.png" alt="">
+    </div>
+</div>
+<div class="about-section__mission">
+    <div class="inner-container">
+        <h1>Our Mission</h1>
+        <p class="main">We strive to get a 20 on this project by implementing various concept that Professor Igor Peretta taught us in the Software Engineering class.
+        </p>
+    </div>
+
+</div>
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>23K</h4>
+            <h3>Images</h3>
+            <p>Processed this year</p>
+        </div>
+        <div class="col-xs-4">
+            <h4>195</h4>
+            <h3>Countries</h3>
+            <p>Our website is used all over the world</p>
+        </div>
+        <div class="col-xs-4">
+            <h4>23K</h4>
+            <h3>Images</h3>
+            <p>Processed this year</p>
+        </div>
+    </div>
+</div>
+{% endblock body %}
