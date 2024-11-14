@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'steganography.apps.SteganographyConfig',
     # define ocr app
     'ocr.apps.OcrConfig',
+    
+     "palette",
 ]
 
 MIDDLEWARE = [
