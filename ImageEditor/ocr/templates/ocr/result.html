@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="w-100 d-block success-message">
+        <div class="alert alert-success text-center" role="alert">
+            Your Image Has Been Processed Successfully!
+        </div>
+    </div>
+
+    <!-- Displaying the image -->
+    <div class="image-container text-center">
+        <img src="{{ obj.img.url }}" alt="Processed Image" class="img-fluid">
+    </div>
+
+    <!-- Displaying the text box -->
+    <div class="mt-3 text-center">
+        <textarea id="text-box" class="form-control" rows="5" readonly>{{ obj.text }}</textarea>
+        <button type="button" id="copy-button" class="btn btn-primary mt-3">Copy Text</button>
+    </div>
+</div>
+
+<script>
+    // JavaScript to copy text to clipboard
+    document.getElementById('copy-button').addEventListener('click', function() {
+        var textBox = document.getElementById('text-box');
+        textBox.select();
+        textBox.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        alert('Text copied to clipboard!');
+    });
+</script>
+{% endblock body %}
