@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="image_display_container">
+  {% if object.img.url %}
+    <div class="uploaded_image">
+      <img src="{{ object.img.url }}" alt="Uploaded Image" class="img-responsive" />
+    </div>
+    <div class="process_button_container">
+        <form method="post">
+            {% csrf_token %}
+            <label for="language_select">Choose a language:</label>
+            <select id="language_select" name="language">
+                {% for abbr, full_name in languages %}
+                    <option value="{{ abbr }}" {% if abbr == default_lang %}selected{% endif %}>{{ full_name }}</option>
+                {% endfor %}
+            </select>
+            <button id="process_button_id" class="process_button" type="submit">Process</button>
+        </form>
+    </div>
+  {% else %}
+    <p>No image uploaded. Please upload an image first.</p>
+  {% endif %}
+</div>
+{% endblock body %}

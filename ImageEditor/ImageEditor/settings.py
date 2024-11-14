@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import logging
 from pathlib import Path
+import os
+import cloudinary
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,10 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-xqg@8y^zwuf88(o$1xk-(oqo-pno2lqnob5+n$--*&zkrjkf-d"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -37,7 +41,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'qr_module.apps.QrModuleConfig',
+  'qr_module.apps.QrModuleConfig',
+
+    # Media Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
+
+    # Crontab
+    'django_crontab',
+
+    # define processing app
+    'processing.apps.ProcessingConfig',
+    # define core app   
+    'core.apps.CoreConfig',
+    # define steganography app   
+    'steganography.apps.SteganographyConfig',
+    # define ocr app
+    'ocr.apps.OcrConfig',
 
 ]
 
@@ -75,12 +95,19 @@ WSGI_APPLICATION = "ImageEditor.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+DATABASES = {}
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES['default'] = dj_database_url.config(default=os.getenv("DATABASE_URL"))
 
 
 # Password validation
@@ -118,12 +145,63 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CLOUDINARY_STORAGE = {
+    'cloud_name': os.getenv("cloud_name"),
+    'api_key': os.getenv("api_key"),
+    'api_secret': os.getenv("api_secret"),
+}
+
+cloudinary.config( 
+  cloud_name = CLOUDINARY_STORAGE.get('cloud_name'), 
+  api_key = CLOUDINARY_STORAGE.get('api_key'), 
+  api_secret = CLOUDINARY_STORAGE.get('api_secret')
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
+
+OCR_DIRECTORY = BASE_DIR / "ocr" / "models"
+
+OCR_LANGUAGES = {
+    "en": "English",
+    "ru": "Russian",
+    "az": "Azerbaijani",
+    "es": "Spanish",
+    "pt": "Portuguese",
+}
+
+DEFAULT_OCR_LANG = "en"

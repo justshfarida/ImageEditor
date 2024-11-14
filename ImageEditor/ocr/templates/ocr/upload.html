@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="upload_container">
+  <form id="upload_form_id" method="post" enctype="multipart/form-data" class="upload_form">
+    <label for="id_img" class="upload_form__drag_and_drop" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <i class="glyphicon glyphicon-cloud-upload text-red"></i>
+      <p>Click here to upload or
+        <strong class="text-red text-uppercase">Drag</strong> and <strong class="text-red text-uppercase">Drop!</strong>
+      </p>
+    </label>
+    <div class="upload_form__django_container">
+      {% csrf_token %} {{ form.errors }} {{ form.as_p }}
+    </div>
+    <br />
+    <div class="upload_form__input--disabled d-flex" disabled>
+      <p id="input_ui">File name here</p>
+      <button id="upload_button_id" class="upload_form__button flex-item" type="submit">Upload</button>
+    </div>
+  </form>
+</div>
+{% endblock body %}
