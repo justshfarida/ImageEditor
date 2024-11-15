@@ -3,5 +3,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("generate_palette/", views.generate_palette, name="generate_palette"),
+    path("generate_palette/", views.PaletteView.as_view(), name="generate_palette"),
 ]
