@@ -1,34 +1,18 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block body %}
 <h2>Read QR Code</h2>
 
-<!-- File Upload Section -->
-<form method="post" enctype="multipart/form-data" id="uploadForm">
+<!-- File Upload and Submit Section -->
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <label for="image">Upload QR Code Image:</label>
+    <label for="id_image">Upload QR Code Image:</label>
     <input type="file" name="image" id="id_image" accept="image/*" required>
-    <button type="button" id="uploadButton" class="btn btn-primary">Upload</button>
+    <button type="submit" class="btn btn-success" style="margin-top: 10px;">Submit</button>
 </form>
 
-<!-- Submit Form Section -->
-<form method="post" id="submitForm">
-    {% csrf_token %}
-    <button type="submit" id="submitButton" class="btn btn-success" disabled>Submit</button>
-</form>
-
-<!-- Display Uploaded Image -->
-<div id="uploadedImage">
-    {% if image_url %}
-        <h3>Uploaded QR Code:</h3>
-        <img src="{{ image_url }}" alt="Uploaded QR Code" />
-    {% endif %}
-</div>
-
-<!-- Display Extracted Data -->
-<div id="extractedData">
+<!-- Display QR Code Data -->
+<div id="extractedData" style="margin-top: 20px;">
     {% if data %}
         <h3>QR Code Data:</h3>
         <p>
@@ -39,6 +23,11 @@
             {% endif %}
         </p>
     {% endif %}
+
+    {% if image_url %}
+        <h3>Uploaded QR Code:</h3>
+        <img src="{{ image_url }}" alt="Uploaded QR Code" style="max-width: 300px;">
+    {% endif %}
 </div>
-<script src="{% static 'js/upload_qr.js' %}"></script>
+
 {% endblock body %}

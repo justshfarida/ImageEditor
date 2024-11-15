@@ -1,0 +1,25 @@
+<!-- palette/templates/palette/palette.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Color Palette Generator{% endblock title %}
+{% load color_filters %}
+
+{% block body %}
+<div class="palette-container">
+    <h2>Your Generated Color Palette</h2>
+
+    <div class="image-preview">
+        <img src="{{ url }}" alt="Uploaded Image">
+    </div>
+
+    <div class="palette-grid">
+        {% for color in palette %}
+            <div class="color-block" style="background-color: {{ color|rgb_to_hex }};">
+                <div class="color-hex">{{ color|rgb_to_hex }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'generate_palette' %}" class="back-link">Generate Another Palette</a>
+</div>
+
+{% endblock body %}

@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'steganography.apps.SteganographyConfig',
     # define ocr app
     'ocr.apps.OcrConfig',
+    
+     "palette",
 
 ]
 
@@ -201,10 +203,10 @@ OCR_DIRECTORY = BASE_DIR / "ocr" / "models"
 
 OCR_LANGUAGES = {
     "en": "English",
-    "ru": "Russian",
-    "az": "Azerbaijani",
-    "es": "Spanish",
-    "pt": "Portuguese",
+    # "ru": "Russian",
+    # "az": "Azerbaijani",
+    # "es": "Spanish",
+    # "pt": "Portuguese",
 }
 
 DEFAULT_OCR_LANG = "en"

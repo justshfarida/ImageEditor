@@ -4,6 +4,7 @@ certifi==2022.9.24
 charset-normalizer==2.1.1
 cloudinary==1.30.0
 colorama==0.4.5
+colorthief==0.2.1
 crayons==0.4.0
 deprecation==2.1.0
 dj-database-url==1.0.0
