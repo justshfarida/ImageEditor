@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+<h2>Read QR Code</h2>
+
+<!-- File Upload Section -->
+<form method="post" enctype="multipart/form-data" id="uploadForm">
+    {% csrf_token %}
+    <label for="image">Upload QR Code Image:</label>
+    <input type="file" name="image" id="id_image" accept="image/*" required>
+    <button type="button" id="uploadButton" class="btn btn-primary">Upload</button>
+</form>
+
+<!-- Submit Form Section -->
+<form method="post" id="submitForm">
+    {% csrf_token %}
+    <button type="submit" id="submitButton" class="btn btn-success" disabled>Submit</button>
+</form>
+
+<!-- Display Uploaded Image -->
+<div id="uploadedImage">
+    {% if image_url %}
+        <h3>Uploaded QR Code:</h3>
+        <img src="{{ image_url }}" alt="Uploaded QR Code" />
+    {% endif %}
+</div>
+
+<!-- Display Extracted Data -->
+<div id="extractedData">
+    {% if data %}
+        <h3>QR Code Data:</h3>
+        <p>
+            {% if data|urlize == data %}
+                <a href="{{ data }}" target="_blank">{{ data }}</a>
+            {% else %}
+                {{ data }}
+            {% endif %}
+        </p>
+    {% endif %}
+</div>
+<script src="{% static 'js/upload_qr.js' %}"></script>
+{% endblock body %}

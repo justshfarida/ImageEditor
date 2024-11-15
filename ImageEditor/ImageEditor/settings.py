@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-  'qr_module.apps.QrModuleConfig',
+    'qr_module.apps.QrModuleConfig',
 
     # Media Cloudinary
     'cloudinary',
@@ -69,14 +69,16 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-]
+]   
 
 ROOT_URLCONF = "ImageEditor.urls"
-TEMPLATE_DIR = BASE_DIR / "templates"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
+        'DIRS': [
+            BASE_DIR / "templates",               # Main templates directory in ImageEditor
+            BASE_DIR / "qr_module" / "templates",  # templates directory inside qr_module
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,6 +90,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = "ImageEditor.wsgi.application"
 
