@@ -1,26 +1,34 @@
 from django.shortcuts import render
+from core.forms import ImageForm
+from django.http import HttpResponseRedirect
+from django.views import View
+from django.contrib import messages
+from palette.functions import get_palette
+import logging
 
-# Create your views here.
-# palette/views.py
-from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
-from colorthief import ColorThief
-from PIL import Image
-import os
+logger = logging.getLogger(__name__)
 
+class PaletteView(View):
+    def get(self, request):
+        form = ImageForm()
+        context = {
+            "form": form,
+        }
+        return render(request, "palette/upload.html", context)
 
-def generate_palette(request):
-    if request.method == "POST" and request.FILES["image"]:
-        uploaded_image = request.FILES["image"]
-        fs = FileSystemStorage()
-        filename = fs.save(uploaded_image.name, uploaded_image)
-        file_url = fs.url(filename)  # Get the file URL to pass to the template
+    def post(self, request):
+        form = ImageForm(request.POST, request.FILES)
 
-        # Use ColorThief to get dominant colors
-        image_path = fs.path(filename)
-        color_thief = ColorThief(image_path)
-        palette = color_thief.get_palette(color_count=6)  # Get top 6 colors
-
-        return render(request, "palette/palette.html", {"palette": palette, "file_url": file_url})
-
-    return render(request, "palette/upload.html")
+        if form.is_valid():
+            obj = form.save()
+            url = obj.img.url
+            palette = get_palette(url)
+            context = {
+                "url": url,
+                "palette": palette,
+            }
+            return render(request, "palette/palette.html", context)
+        else:
+            messages.warning(request, 'Please select a Picture')
+            logger.error("Please select a Picture")
+            return HttpResponseRedirect(request.path)

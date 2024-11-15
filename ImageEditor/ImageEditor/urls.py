@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include("core.urls")),
     path('', RedirectView.as_view(url='core/')),
     path('ocr/', include("ocr.urls")),
+     path("palette/", include("palette.urls")),
 ]
 
 if settings.DEBUG: 

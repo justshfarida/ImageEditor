@@ -198,10 +198,10 @@ OCR_DIRECTORY = BASE_DIR / "ocr" / "models"
 
 OCR_LANGUAGES = {
     "en": "English",
-    "ru": "Russian",
-    "az": "Azerbaijani",
-    "es": "Spanish",
-    "pt": "Portuguese",
+    # "ru": "Russian",
+    # "az": "Azerbaijani",
+    # "es": "Spanish",
+    # "pt": "Portuguese",
 }
 
 DEFAULT_OCR_LANG = "en"
