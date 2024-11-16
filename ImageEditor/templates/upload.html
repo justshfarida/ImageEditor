@@ -23,6 +23,8 @@
         <div class="drag-area" id="dragArea">
             <p>Or drop image here</p>
         </div>
+
+        {% block extra %} {% endblock %}
     
         <!-- Upload Button -->
         <button type="submit" class="upload-button">{% block upload-button %} {% endblock %}</button>
