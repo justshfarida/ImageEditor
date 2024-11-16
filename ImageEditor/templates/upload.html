@@ -1,0 +1,50 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block body %}
+<div class="upload-container">
+    <h2>{% block page-title %} {% endblock %}</h2>
+
+    <p>Drag and drop an image or click the button below to upload</p>
+    
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+    
+        <!-- Hidden Input for File -->
+        <div style="display: none;">
+            {{ form.img }}
+        </div>
+    
+        <!-- Separate Upload Button -->
+        <button type="button" class="choose-button" id="chooseButton">Choose File</button>
+        <input type="file" id="fileInput" class="file-input" onchange="document.getElementById('{{ form.img.id_for_label }}').files = this.files;">
+    
+        <!-- Drag and Drop Area -->
+        <div class="drag-area" id="dragArea">
+            <p>Or drop image here</p>
+        </div>
+
+        {% block extra %} {% endblock %}
+    
+        <!-- Upload Button -->
+        <button type="submit" class="upload-button">{% block upload-button %} {% endblock %}</button>
+    </form>
+
+    <!-- Image Preview with Discard Button -->
+    <div class="preview-container" id="previewContainer">
+        <span class="discard-button" id="discardButton">&times;</span>
+        <img id="previewImage" alt="Image Preview">
+        <p id="placeholderText">Your image will appear here</p>
+    </div>
+
+    <div class="footer">
+        <p>Supported formats: JPG, PNG, GIF</p>
+    </div>
+</div>
+
+
+{% endblock body %}
+
+{% block scripts %}
+<script src="{% static 'js/upload2.js' %}"></script>
+{% endblock scripts %}
