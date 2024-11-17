@@ -8,5 +8,4 @@ urlpatterns = [
     path('', RedirectView.as_view(url='core/', permanent=True)),
     path('core/', include("core.urls")),   
     path('upload/', views.Upload.as_view(), name="upload"),
-    path('preview/', views.Preview.as_view(), name="preview"),
 ]
