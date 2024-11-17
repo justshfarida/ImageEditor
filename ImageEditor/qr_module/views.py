@@ -1,3 +1,5 @@
+from pyexpat.errors import messages
+from venv import logger
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
@@ -5,10 +7,8 @@ from .forms import QRCodeForm
 from core.models import Image  # Import the Image model
 from core.forms import ImageForm  # Import the ImageForm
 from .utils import generate_qr_code, read_qr_code
-import cloudinary.uploader
 from urllib.parse import unquote
 import requests
-
 
 class GenerateQRCodeView(View):
     def get(self, request):
@@ -31,36 +31,27 @@ class GenerateQRCodeView(View):
 
 class ReadQRCodeView(View):
     def get(self, request):
-        return render(request, 'qr_module/read_qr.html')
+        form = ImageForm()
+        return render(request, 'qr_module/read_qr.html', {"form": form})
 
     def post(self, request):
-        image_form = ImageForm(request.POST, request.FILES)
+        form = ImageForm(request.POST, request.FILES)
 
-        if image_form.is_valid():
-            # Save the image using ImageForm
-            image_instance = image_form.save()
-            image_url = image_instance.img.url  # Cloudinary URL
+        if form.is_valid():
+            obj = form.save()  # Save the image instance
+            qr_code_data = read_qr_code(obj.img.url)  # Read QR code from the uploaded image
 
-            try:
-                # Read QR code data
-                data = read_qr_code(image_url)
-                if not data:
-                    data = "No QR code detected."
+            if not qr_code_data:
+                qr_code_data = "No QR code detected."
 
-                return render(request, 'qr_module/read_qr.html', {
-                    'data': data,
-                    'image_url': image_url,  # Pass the image URL for display
-                })
-            except Exception as e:
-                return render(request, 'qr_module/read_qr.html', {
-                    'error': f"Error processing QR code: {e}"
-                })
-
-        return render(request, 'qr_module/read_qr.html', {
-            'error': 'Invalid input.'
-        })
-
-
+            context = {
+                "url": obj.img.url,
+                "data": qr_code_data,
+            }
+            return render(request, 'qr_module/display_data.html', context)
+        else:
+            messages.error(request, "Please upload a valid image file.")
+            return redirect(request.path)
 class DownloadQRCodeView(View):
     def get(self, request):
         file_url = unquote(request.GET.get('filename', ''))

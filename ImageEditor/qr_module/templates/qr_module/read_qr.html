@@ -1,33 +1,5 @@
-{% extends 'base.html' %}
-
-{% block body %}
-<h2>Read QR Code</h2>
-
-<!-- File Upload and Submit Section -->
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="id_image">Upload QR Code Image:</label>
-    <input type="file" name="image" id="id_image" accept="image/*" required>
-    <button type="submit" class="btn btn-success" style="margin-top: 10px;">Submit</button>
-</form>
-
-<!-- Display QR Code Data -->
-<div id="extractedData" style="margin-top: 20px;">
-    {% if data %}
-        <h3>QR Code Data:</h3>
-        <p>
-            {% if data|urlize == data %}
-                <a href="{{ data }}" target="_blank">{{ data }}</a>
-            {% else %}
-                {{ data }}
-            {% endif %}
-        </p>
-    {% endif %}
-
-    {% if image_url %}
-        <h3>Uploaded QR Code:</h3>
-        <img src="{{ image_url }}" alt="Uploaded QR Code" style="max-width: 300px;">
-    {% endif %}
-</div>
-
-{% endblock body %}
+{% extends 'upload.html' %} 
+{% load static %}
+{% block title %}QR Code to text{% endblock title %}
+{% block page-title %} Extract Text from Qr Code {% endblock %}
+{% block upload-button %} Read QR Code {% endblock %}
