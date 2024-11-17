@@ -3,18 +3,48 @@
 {% block title %}Generate QR Code{% endblock title %}
 
 {% block body %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Generate QR Code</button>
-</form>
-{% if filename %}
-    <h3>Generated QR Code:</h3>
-    <img src="{{ filename }}" alt="Generated QR Code" />
-    <br>
-    <!-- Generate the download link with a query parameter -->
-    <a href="{% url 'qr_module:download_qr' %}?filename={{ filename|urlencode }}" class="btn btn-success">Download QR Code</a>
-    <br><br>
-    <a href="{% url 'qr_module:generate_qr' %}" class="btn btn-secondary">Generate another QR Code</a>
-{% endif %}
+<div class="upload-container">
+    <h2>Generate QR Code</h2>
+    <p>Fill in the details below to generate your QR code</p>
+
+    <form method="post" class="form-grid">
+        {% csrf_token %}
+        
+        <!-- QR Code Data Input -->
+        <div class="form-group">
+            <label for="{{ form.data.id_for_label }}">{{ form.data.label }}</label>
+            {{ form.data }}
+        </div>
+        
+        <!-- Foreground Color Selection -->
+        <div class="form-group">
+            <label for="id_fill_color">Select QR Code Color:</label>
+            <input type="color" id="id_fill_color" name="fill_color" value="#000000">
+        </div>
+        
+        <!-- Background Color Selection -->
+        <div class="form-group">
+            <label for="id_back_color">Select Background Color:</label>
+            <input type="color" id="id_back_color" name="back_color" value="#ffffff">
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="form-group full-width">
+            <button type="submit" class="upload-button">Generate QR Code</button>
+        </div>
+    </form>
+
+    {% if filename %}
+        <div class="preview-container">
+            <h3>Generated QR Code:</h3>
+            <img src="{{ filename }}" alt="Generated QR Code">
+        </div>
+        
+        <!-- Download Link -->
+        <a href="{% url 'qr_module:download_qr' %}?filename={{ filename|urlencode }}" class="upload-button" style="margin-top: 20px;">Download QR Code</a>
+        
+        <!-- Generate Another QR Code -->
+        <a href="{% url 'qr_module:generate_qr' %}" class="choose-button">Generate another QR Code</a>
+    {% endif %}
+</div>
 {% endblock body %}
