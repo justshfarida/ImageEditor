@@ -39,58 +39,83 @@
 
     <body>
         <div id="app">
-            <nav>
-                <a class="burger-nav"></a>
-                <ul class="navbar__list nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'core:index' %}">
-                            <i class="fas fa-home"></i> Homepage
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            <i class="fas fa-image"></i> Steganography
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            <i class="fas fa-video"></i> Video Compilation
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'palette:generate_palette' %}">
-                            <i class="fas fa-palette"></i> Palette Generator
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'ocr:upload' %}">
-                            <i class="fas fa-text-height"></i> OCR
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" id="navbarDropdown" aria-expanded="false">
-                            <i class="fas fa-qrcode"></i> QR Code
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{% url 'qr_module:generate_qr' %}">
-                                    Generate QR Code
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'qr_module:read_qr' %}">
-                                    Read QR Code
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'core:about' %}">
-                            <i class="fas fa-info-circle"></i> About Us
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">        
+                        <!-- Burger Menu -->
+                        <button
+                            class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+            
+                        <!-- Navbar Links -->
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mx-auto"> <!-- mx-auto centers the content -->
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'core:index' %}">
+                                        <i class="fas fa-home"></i> Homepage
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">
+                                        <i class="fas fa-image"></i> Steganography
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">
+                                        <i class="fas fa-video"></i> Video Compilation
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'palette:generate_palette' %}">
+                                        <i class="fas fa-palette"></i> Palette Generator
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ocr:upload' %}">
+                                        <i class="fas fa-text-height"></i> OCR
+                                    </a>
+                                </li>
+                                <!-- Dropdown for QR Code -->
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        id="qrDropdown"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="qrDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'qr_module:generate_qr' %}">
+                                                Generate QR Code
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'qr_module:read_qr' %}">
+                                                Read QR Code
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'core:about' %}">
+                                        <i class="fas fa-info-circle"></i> About Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }}">{{ message }}</div>
@@ -99,8 +124,8 @@
             <div class="container-fluid">
                 {% block body %}{% endblock body %}
             </div>
-            <footer class="footer">
-                <div class="d-flex">
+            <footer class="footer mt-5">
+                <div class="d-flex justify-content-center">
                     <p class="text-white">© Imgman</p>
                 </div>
             </footer>
@@ -109,10 +134,8 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     <!-- Popper and Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome Kit -->
     <script src="https://kit.fontawesome.com/fd1fb5a56f.js" crossorigin="anonymous"></script>
 
