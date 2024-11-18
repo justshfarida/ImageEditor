@@ -2,11 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 1rem;
-  background-color: var(--BLACK-300);
-  height: 4rem;
+  padding-top: 10px;
+  background-color: #444;
+  height: 50px;
   position: fixed;
   width: 100%;
   bottom: 0;
-  color: var(--WHITE);
+  color: #fff;
+  font-size: 14px;
 }

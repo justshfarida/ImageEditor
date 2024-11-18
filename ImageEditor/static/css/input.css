@@ -1,8 +1,7 @@
 .default_input {
   width: 100%;
-  background-color: var(--WHITE);
-  border: 1px solid var(--BLACK-300);
-  padding: 0.5rem;
-  border-radius: 4px;
-  padding-left: 1rem;
+  background-color: #fff;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 5px;
 }
