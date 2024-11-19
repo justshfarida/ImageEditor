@@ -63,7 +63,7 @@ scipy==1.10.1
 shapely==2.0.6
 six==1.16.0
 sqlparse==0.4.3
-stegano==0.10.2
+stegano
 sympy==1.13.3
 tifffile==2023.7.10
 toml==0.10.2
