@@ -5,25 +5,20 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies and Poetry
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
-    curl \
-    && curl -sSL https://install.python-poetry.org | python3 - \
     && rm -rf /var/lib/apt/lists/*
-
-# Add Poetry to PATH
-ENV PATH="/root/.local/bin:$PATH"
 
 # Set the working directory
 WORKDIR /app
 
-# Copy only the dependency files first to leverage Docker's caching
-COPY pyproject.toml poetry.lock /app/
+# Copy only the requirements file first to leverage Docker's caching
+COPY requirements.txt /app/
 
 # Install project dependencies
-RUN poetry install
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project files
 COPY . /app/
@@ -32,4 +27,4 @@ COPY . /app/
 EXPOSE 8000
 
 # Run the application
-CMD ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
