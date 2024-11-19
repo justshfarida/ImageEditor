@@ -1,23 +1,17 @@
 {% load static %}
 <!DOCTYPE html>
 <html5>
-    
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
         <link rel="stylesheet" href="{% static 'css/global.css' %}">
         <link rel="stylesheet" href="{% static 'css/utils.css' %}">
         <link rel="stylesheet" href="{% static 'css/container.css' %}">
         <link rel="stylesheet" href="{% static 'css/button.css' %}">
         <link rel="stylesheet" href="{% static 'css/input.css' %}">
         <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-        <link rel="stylesheet" href="{% static 'css/contact.css' %}">
         <link rel="stylesheet" href="{% static 'css/home.css' %}">
         <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
         <link rel="stylesheet" href="{% static 'css/forms.css' %}">
@@ -26,77 +20,133 @@
         <link rel="stylesheet" href="{% static 'css/upload.css' %}">
         <link rel="stylesheet" href="{% static 'css/palette.css' %}">
         <link rel="stylesheet" href="{% static 'css/media-query.css' %}">
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/fd1fb5a56f.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/generate_qr.css' %}">
         
-r
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        
+        <!-- Font Awesome CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
+
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+        
         <title>{% block title %}{% endblock title %}</title>
     </head>
 
     <body>
         <div id="app">
-            <nav>
-                <a class="burger-nav"></a>
-                <ul class="navbar__list">
-                    <li class="navbar__list--item">
-                        <a class="active" href="{% url 'core:index' %}"><i class="glyphicon glyphicon-home"> </i> Homepage</a>
-                    </li>
-                    {% comment %} <li class="navbar__list--item">
-                        <a class="active" href=""><i class="glyphicon glyphicon-upload"> </i>
-                            Image processing</a>
-                    </li> {% endcomment %}
-                                        <li class="navbar__list--item">
-                        <a class="active" href=""><i class="glyphicon glyphicon-upload"> </i>
-                            Steganography</a>
-                    </li>
-                    <li class="navbar__list--item">
-                        <a class="active" href=""><i
-                                class="glyphicon glyphicon-refresh">Video compilation</a>
-                    </li>
-                    <li class="navbar__list--item">
-                        <a class="active" href="{% url 'palette:generate_palette' %}"><i
-                                class="glyphicon glyphicon-refresh">Palette generator</a>
-                    </li>
-                    <li class="navbar__list--item">
-                        <a class="active" href="{% url 'ocr:upload' %}"><i
-                                class="glyphicon glyphicon-refresh">OCR</a>
-                    <li class="navbar__list--item">
-                        <a class="active" href="{% url 'core:about' %}"><i
-                                class="glyphicon glyphicon-info-sign"></i>About
-                            us</a>
-                    </li>
-                </ul>
-            </nav>
-            {% if messages %} {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %} {% endif %}
-            <div class="container-fluid">{% block body %}{% endblock body %}</div>
-            <footer class="footer">
-
-                <div class="d-flex">
-                    <p class="text-white">© Imgman</p>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <div class="container-fluid">        
+                        <!-- Burger Menu -->
+                        <button
+                            class="navbar-toggler"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav"
+                            aria-controls="navbarNav"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+            
+                        <!-- Navbar Links -->
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mx-auto"> <!-- mx-auto centers the content -->
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'core:index' %}">
+                                        <i class="fas fa-home"></i> Homepage
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">
+                                        <i class="fas fa-image"></i> Steganography
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'palette:generate_palette' %}">
+                                        <i class="fas fa-palette"></i> Palette Generator
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'ocr:upload' %}">
+                                        <i class="fas fa-text-height"></i> OCR
+                                    </a>
+                                </li>
+                                <!-- Dropdown for QR Code -->
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        id="qrDropdown"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <i class="fas fa-qrcode"></i> QR Code
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="qrDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'qr_module:generate_qr' %}">
+                                                Generate QR Code
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'qr_module:read_qr' %}">
+                                                Read QR Code
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'core:about' %}">
+                                        <i class="fas fa-info-circle"></i> About Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="container-fluid">
+                {% block body %}{% endblock body %}
+            </div>
+            <footer class="footer mt-5">
+                <div class="d-flex justify-content-center">
+                    <p class="text-white">© Skibidi</p>
                 </div>
-
             </footer>
         </div>
-    </body>
+        <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- Popper and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome Kit -->
+    <script src="https://kit.fontawesome.com/fd1fb5a56f.js" crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/menu.js' %}"></script>
     <script src="{% static 'js/upload.js' %}"></script>
     {% block scripts %}{% endblock scripts %}
+    
+    <!-- Example JavaScript alert for form -->
     <script>
         $('.prevent').on('click', function (e) {
             if ($(".default_input").val() == "") {
                 alert("Pls enter a secret key");
                 e.preventDefault();
             }
-        })
+        });
     </script>
 </html5>
