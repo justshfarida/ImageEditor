@@ -33,18 +33,5 @@
             <button type="submit" class="upload-button">Generate QR Code</button>
         </div>
     </form>
-
-    {% if filename %}
-        <div class="preview-container">
-            <h3>Generated QR Code:</h3>
-            <img src="{{ filename }}" alt="Generated QR Code">
-        </div>
-        
-        <!-- Download Link -->
-        <a href="{% url 'qr_module:download_qr' %}?filename={{ filename|urlencode }}" class="upload-button" style="margin-top: 20px;">Download QR Code</a>
-        
-        <!-- Generate Another QR Code -->
-        <a href="{% url 'qr_module:generate_qr' %}" class="choose-button">Generate another QR Code</a>
-    {% endif %}
 </div>
 {% endblock body %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Result{% endblock title %}
+
+{% block body %}
+<div>
+    <img src="{{ filename }}" alt="Generated QR Code" />
+</div>
+
+<!-- Download Link -->
+<a href="{% url 'qr_module:download_qr' %}?filename={{ filename|urlencode }}" style="margin-top: 20px;">Download QR Code</a>
+
+<!-- Generate Another QR Code -->
+<a href="{% url 'qr_module:generate_qr' %}">Generate another QR Code</a>
+{% endblock body %}

@@ -25,9 +25,8 @@ class GenerateQRCodeView(View):
             # Generate QR code and get Cloudinary URL
             cloudinary_url = generate_qr_code(data, fill_color, back_color)
 
-            return render(request, 'qr_module/generate_qr.html', {'filename': cloudinary_url})
+            return render(request, 'qr_module/result.html', {'filename': cloudinary_url})
         return render(request, 'qr_module/generate_qr.html', {'form': form, 'error': 'Invalid input.'})
-
 
 class ReadQRCodeView(View):
     def get(self, request):
@@ -52,6 +51,7 @@ class ReadQRCodeView(View):
         else:
             messages.error(request, "Please upload a valid image file.")
             return redirect(request.path)
+        
 class DownloadQRCodeView(View):
     def get(self, request):
         file_url = unquote(request.GET.get('filename', ''))

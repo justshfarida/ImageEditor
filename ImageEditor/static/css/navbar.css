@@ -4,7 +4,7 @@
   align-items: center; /* Align items vertically in the center */
   list-style-type: none;
   margin: 0;
-  padding: 0.5rem 1rem; /* Reduced padding */
+  padding: 1rem; /* Reduced padding */
   overflow: hidden;
   background-color: var(--BLACK-300);
   z-index: 999;
@@ -20,7 +20,7 @@
   display: inline-block;
   color: var(--WHITE);
   text-align: center;
-  padding: 0.5rem 1rem; /* Reduce padding */
+  padding: 1rem; /* Reduce padding */
   text-decoration: none;
   font-size: 1rem; /* Adjust font size */
   transition: background-color 0.4s, color 0.4s; /* Smooth transition for hover effects */
@@ -48,6 +48,10 @@
 
 .nav-item.dropdown:hover .dropdown-menu {
   display: block; /* Show dropdown on hover */
+}
+
+.nav-link {
+  padding: 1rem;
 }
 
 .dropdown-item {
