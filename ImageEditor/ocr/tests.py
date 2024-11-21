@@ -20,10 +20,11 @@ class OCRUploadTest(TestCase):
                 content_type='image/png'
             )
 
-    @patch('ocr.views.ocr')  # Mock the OCR function
-    def test_valid_submission(self, mock_ocr):
-        mock_ocr.return_value = "Extracted text from OCR"
-        
+    @patch('easyocr.Reader')  # Mock the Reader class
+    def test_valid_submission(self, mock_reader):
+        mock_reader_instance = mock_reader.return_value
+        mock_reader_instance.readtext.return_value = ["Extracted text from OCR"]
+
         response = self.client.post(self.upload_url, {
             'img': self.test_image,
             'language': self.valid_language
