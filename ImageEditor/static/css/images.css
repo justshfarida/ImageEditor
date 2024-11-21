@@ -4,18 +4,8 @@ img {
   height: auto;
 }
 
-.images {
-  padding: 2rem;
-}
-
 .images__image {
   width: 21rem;
   height: auto;
-  margin: 1rem;
-}
-
-.images__image--result {
-  width: 20rem;
-  height: auto;
-  margin: 1rem;
+  margin: 10px;
 }

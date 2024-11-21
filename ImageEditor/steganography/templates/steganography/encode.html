@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encode Message</title>
+</head>
+<body>
+    <h1>Encode a Message into an Image</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Encode</button>
+    </form>
+</body>
+</html>
