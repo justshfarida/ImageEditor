@@ -2,7 +2,6 @@ import easyocr
 from django.conf import settings
 
 def ocr(image_path, lang):
-    a = 5 / 0
     reader = easyocr.Reader([lang], gpu=False, model_storage_directory=settings.OCR_DIRECTORY)
     result = reader.readtext(image_path, detail=0)
     text = " ".join(result)
