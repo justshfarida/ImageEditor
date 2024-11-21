@@ -62,10 +62,29 @@
                                         <i class="fas fa-home"></i> Homepage
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="">
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        id="stegDropdown"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
                                         <i class="fas fa-image"></i> Steganography
                                     </a>
+                                    <ul class="dropdown-menu" aria-labelledby="stegDropdown">
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'steganography:upload' 'encode' %}">
+                                                Encode the image
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'steganography:upload' 'decode' %}">
+                                                Decode the image
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'palette:generate_palette' %}">

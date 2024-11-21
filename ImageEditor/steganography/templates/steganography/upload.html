@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="upload-container">
+    <h2>{% block page-title %}Steganography Tool{% endblock %}</h2>
+
+    <p>Hide a secret message inside an image or retrieve a hidden message from an image.</p>
+
+    <form id="steganographyForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <!-- File Input -->
+        <div>
+            {{ form.image }}
+        </div>
+
+        <!-- Message Input (only for encoding) -->
+        {% if is_encoding %}
+        <div class="message-area">
+            <label for="id_message">Message to Encode:</label>
+            {{ form.message }}
+        </div>
+        {% endif %}
+
+        <button type="submit" class="upload-button">
+            {% if is_encoding %}Encode Image{% else %}Decode Image{% endif %}
+        </button>
+    </form>
+
+    <div class="preview-container">
+        <p>Supported formats: JPG, PNG, GIF</p>
+    </div>
+</div>
+{% endblock body %}

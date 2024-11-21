@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     # define ocr app
     'ocr.apps.OcrConfig',
     
-     "palette",
+    "palette",
 
 ]
 

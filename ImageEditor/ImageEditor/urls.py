@@ -26,8 +26,9 @@ urlpatterns = [
     path('', include("core.urls")),
     path('', RedirectView.as_view(url='core/')),
     path('ocr/', include("ocr.urls")),
-     path("palette/", include("palette.urls")),
+    path("palette/", include("palette.urls")),
     path('qr/', include(('qr_module.urls', 'qr_module'), namespace='qr_module')),  # QR module with namespace
+    path('steganography/', include('steganography.urls')),
 ]
 
 if settings.DEBUG: 
