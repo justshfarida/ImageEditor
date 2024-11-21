@@ -21,6 +21,7 @@ python-dotenv = "^1.0.1"
 torch = {version = "^2.5.1+cpu", source = "pytorch_cpu"}
 torchvision = {version = "^0.20.1+cpu", source = "pytorch_cpu"}
 easyocr = "^1.7.2"
+gunicorn = "^23.0.0"
 
 
 [[tool.poetry.source]]
