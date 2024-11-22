@@ -38,4 +38,4 @@ RUN mkdir -p /app/static /app/media
 EXPOSE 80
 
 # Command to start the container: run Django migrations, collect static files, start Gunicorn and Nginx
-CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn myproject.wsgi:application --bind 127.0.0.1:8000 & nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn ImageEditor.wsgi:application --bind 127.0.0.1:8000 & nginx -g 'daemon off;'"]
