@@ -210,3 +210,9 @@ OCR_LANGUAGES = {
 }
 
 DEFAULT_OCR_LANG = "en"
+
+## Django Crontab Settings
+
+CRONJOBS = [
+    ('*/5 * * * *', 'django.core.management.call_command', ['delete-image'])
+]
