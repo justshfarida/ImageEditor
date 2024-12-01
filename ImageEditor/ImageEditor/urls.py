@@ -26,9 +26,15 @@ urlpatterns = [
     path('', include("core.urls")),
     path('', RedirectView.as_view(url='core/')),
     path('ocr/', include("ocr.urls")),
+<<<<<<< HEAD
     path("palette/", include("palette.urls")),
     path('qr/', include(('qr_module.urls', 'qr_module'), namespace='qr_module')),  # QR module with namespace
     path('steganography/', include('steganography.urls')),
+=======
+     path("palette/", include("palette.urls")),
+    path('qr/', include(('qr_module.urls', 'qr_module'), namespace='qr_module')),# QR module with namespace
+    path('processing/', include("processing.urls")),
+>>>>>>> 346ac55ab8a13b128b710538ffd07fcacbd4d442
 ]
 
 if settings.DEBUG: 
