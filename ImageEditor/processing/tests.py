@@ -4,6 +4,7 @@ import numpy as np
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from unittest.mock import patch
+import os
 from core.models import Image
 from processing.helper import blur, color_to_grayscale, img_to_pdf, clr_to_bw, resize, encrypt_image, decrypt_image, sharp
 
@@ -61,17 +62,28 @@ class ViewsTests(TestCase):
         self.choice_url = reverse("processing:select_choice")
         self.process_url = reverse("processing:process", kwargs={"choice": 0})
 
-        # Sample image for upload tests
-        self.sample_image = SimpleUploadedFile(
-            name="test_image.png",
-            content=b"file_content",
-            content_type="image/png"
-        )
+        # Create test files using SimpleUploadedFile
+        self.test_image_path = os.path.join('test_data', 'test_valid.png')
+        with open(self.test_image_path, 'rb') as img_file:
+            self.sample_image = SimpleUploadedFile(
+                name='test_valid.png',
+                content=img_file.read(),
+                content_type='image/png'
+            )
 
-        # Mock image object for processing and selection
+        self.test_pdf_path = os.path.join('test_data', 'test_valid.pdf')
+        with open(self.test_pdf_path, 'rb') as pdf_file:
+            self.sample_pdf = SimpleUploadedFile(
+                name='test_valid.pdf',
+                content=pdf_file.read(),
+                content_type='application/pdf'
+            )
+
+        # Create mock image object and store its ID in the session
         self.image = Image.objects.create(img="test_image.png")
-        self.client.session["id"] = self.image.id
-        self.client.session.save()
+        session = self.client.session
+        session["id"] = self.image.id
+        session.save()
 
     def test_get_upload_page(self):
         response = self.client.get(self.upload_url)
@@ -85,11 +97,7 @@ class ViewsTests(TestCase):
 
     @patch("processing.helper.color_to_grayscale")
     def test_post_grayscale_processing(self, mock_grayscale):
-        mock_grayscale.return_value = SimpleUploadedFile(
-            name="grayscale_image.png",
-            content=b"grayscale_content",
-            content_type="image/png"
-        )
+        mock_grayscale.return_value = self.sample_image
 
         response = self.client.post(self.process_url, {"type": "Preview"})
         self.assertEqual(response.status_code, 200)
@@ -97,14 +105,15 @@ class ViewsTests(TestCase):
 
     @patch("processing.helper.img_to_pdf")
     def test_post_pdf_processing(self, mock_pdf):
-        mock_pdf.return_value = SimpleUploadedFile(
-            name="converted.pdf",
-            content=b"pdf_content",
-            content_type="application/pdf"
-        )
+        mock_pdf.return_value = self.sample_pdf
 
         process_url = reverse("processing:process", kwargs={"choice": 1})
         response = self.client.post(process_url, {"type": "Download"})
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.has_header("Content-Disposition"))
         self.assertIn("demo.pdf", response["Content-Disposition"])
+
+    def test_missing_file_submission(self):
+        response = self.client.post(self.upload_url, {})
+        self.assertEqual(response.status_code, 302)  # Redirect back to form
+        self.assertRedirects(response, self.upload_url)
