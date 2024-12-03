@@ -20,5 +20,5 @@ class HomeView(TemplateView):
 class AboutView(TemplateView):
     '''
     Sets the about page.
-    '''
+    ''' 
     template_name = 'about.html'
