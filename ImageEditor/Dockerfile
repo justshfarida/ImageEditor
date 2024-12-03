@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set the working directory in the container
 WORKDIR /app
 
-# Install necessary system dependencies, including Nginx
+# Install necessary system dependencies
 RUN apt-get update \
     && apt-get install -y \
     gcc \
@@ -16,7 +16,6 @@ RUN apt-get update \
     ffmpeg \
     libsm6 \
     libxext6 \
-    nginx \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,14 +27,11 @@ RUN pip install --upgrade pip \
 # Copy application source code
 COPY . /app/
 
-# Copy Nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Ensure static files are served from the correct directory
 RUN mkdir -p /app/static /app/media
 
-# Expose the port for Nginx (default 80)
-EXPOSE 80
+# Expose the port for Gunicorn (default 8000)
+EXPOSE 8000
 
-# Command to start the container: run Django migrations, collect static files, start Gunicorn and Nginx
-CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn ImageEditor.wsgi:application --bind 127.0.0.1:8000 & nginx -g 'daemon off;'"]
+# Command to start Gunicorn
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn ImageEditor.wsgi:application --bind 0.0.0.0:8000"]
