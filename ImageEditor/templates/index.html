@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
 Home
 {% endblock title %}
 {% block body %}
 <div class="container home-section">
-    <div class="container-fluid home-section--flex-column">
-        <div>
-            {% load static %}
-            <img src="{% static 'images/logo.png' %}" alt="imgman-logo">
+    <!-- Hero Section with Base Image on the Left and Text + Filtered Images on the Right -->
+    <section class="hero d-flex align-items-center">
+        <!-- Base Image on the Left -->
+        <div class="col-md-6 hero-image-container">
+            <img class="images__image" src="{% static 'images/img-manipulation/base-img.jpg' %}" alt="Base Image">
         </div>
 
-        <div>
-            <p class="home-section__content">This image editor allows users to apply unique filters, resize images, make video compilations, apply steganography and pick a color palette based on your image.</p>
+        <!-- Hero Content (Text and Filtered Images) on the Right -->
+        <div class="col-md-6 hero-content-container">
+            <div class="hero-content text-center text-white">
+                <h1 class="display-4 fw-bold">Welcome to Skibidi</h1>
+                <p class="lead">Your one-stop solution for image manipulation</p>
+            </div>
+            <!-- Filtered Images in a 2x2 Flexbox -->
+            <div class="hero-images d-flex flex-wrap gap-3">
+                <img class="hero-image" src="{% static 'images/img-manipulation/gray.png' %}" alt="Gray Image">
+                <img class="hero-image" src="{% static 'images/img-manipulation/blur.png' %}" alt="Blur Image">
+                <img class="hero-image" src="{% static 'images/img-manipulation/black.png' %}" alt="Black Image">
+                <img class="hero-image" src="{% static 'images/img-manipulation/tint.png' %}" alt="Tint Image">
+            </div>
         </div>
-    </div>
-    
-    <div class="images">
-        <p class="images__title">Uploaded Base Image:</p>
-        <img class="images__image" src="{% static 'images/img-manipulation/base-img.jpg' %}" alt="base-image">
-        <div>
-            <p class="images__title">Results: </p>
-            <img class="images__image--result" src="{% static 'images/img-manipulation/gray.png' %}" alt="gray-image">
-            <img class="images__image--result" src="{% static 'images/img-manipulation/blur.png' %}" alt="blur-image">
-            <img class="images__image--result" src="{% static 'images/img-manipulation/black.png' %}" alt="black-image">
-            <img class="images__image--result" src="{% static 'images/img-manipulation/tint.png' %}" alt="tint-image">
-        </div>
-    </div>
-
+    </section>
 </div>
 {% endblock body %}
