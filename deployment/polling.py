@@ -10,10 +10,11 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 DOCKER_HUB_REPO = "skibidi05/django"
-SERVICE_NAME = "skibidi"  # Swarm service name
+STACK_NAME = "skibidi-stack"  # Swarm stack name
 CHECK_INTERVAL = 60  # in seconds
+COMPOSE_FILE_PATH = "./docker-compose.yml"  # Path to your docker-compose file
 
-def get_latest_tag(): 
+def get_latest_tag():
     """Fetch the latest tag of the Docker image from Docker Hub."""
     url = f"https://hub.docker.com/v2/repositories/{DOCKER_HUB_REPO}/tags/"
     try:
@@ -26,23 +27,49 @@ def get_latest_tag():
         logger.error(f"Error fetching tags from Docker Hub: {e}")
         return None
 
-def update_swarm_service(tag):
-    """Update the Swarm service with the new image tag."""
+def update_stack(tag):
+    """Update the stack with the new image tag."""
     client = docker.from_env()
-    image = f"{DOCKER_HUB_REPO}:{tag}"
+    
+    # Modify the docker-compose.yml file with the new tag dynamically
     try:
-        logger.info(f"Pulling image: {image}")
+        logger.info(f"Pulling image: {DOCKER_HUB_REPO}:{tag}")
         client.images.pull(DOCKER_HUB_REPO, tag=tag)
+        
+        # Update the docker-compose.yml file with the new image tag
+        update_compose_file(tag)
 
-        # Update the service to use the new image
-        logger.info(f"Updating Swarm service {SERVICE_NAME} to use image {image}")
-        service = client.services.get(SERVICE_NAME)
-        service.update(image=image)
-        logger.info(f"Service {SERVICE_NAME} updated successfully to image {image}.")
-    except docker.errors.NotFound:
-        logger.error(f"Service {SERVICE_NAME} not found. Ensure the service exists in the Swarm.")
+        # Deploy the updated stack
+        logger.info(f"Deploying the stack {STACK_NAME} with the updated image {tag}")
+        client.stacks.deploy(
+            name=STACK_NAME,
+            compose_file=open(COMPOSE_FILE_PATH, 'r').read(),
+            compose_file_override=True  # Ensures it deploys the updated file
+        )
+        logger.info(f"Stack {STACK_NAME} updated successfully with the new image {tag}.")
+    except docker.errors.APIError as e:
+        logger.error(f"Error pulling image or deploying stack: {e}")
     except Exception as e:
-        logger.error(f"Error updating the service: {e}")
+        logger.error(f"Error during stack update: {e}")
+
+def update_compose_file(tag):
+    """Update the docker-compose.yml file with the new image tag."""
+    try:
+        # Read the existing docker-compose.yml
+        with open(COMPOSE_FILE_PATH, 'r') as file:
+            compose_content = file.read()
+        
+        # Replace the image tag in the docker-compose.yml content
+        new_content = compose_content.replace(
+            f"{DOCKER_HUB_REPO}:latest", f"{DOCKER_HUB_REPO}:{tag}"
+        )
+
+        # Write the updated content back to the docker-compose.yml
+        with open(COMPOSE_FILE_PATH, 'w') as file:
+            file.write(new_content)
+        logger.info(f"Updated docker-compose.yml with tag {tag}.")
+    except Exception as e:
+        logger.error(f"Error updating docker-compose.yml: {e}")
 
 def main():
     load_dotenv()
@@ -53,7 +80,7 @@ def main():
         latest_tag = get_latest_tag()
         if latest_tag and latest_tag != last_tag:
             logger.info(f"New image version detected: {latest_tag}")
-            update_swarm_service(latest_tag)
+            update_stack(latest_tag)
             last_tag = latest_tag
         else:
             logger.info("No updates found.")
