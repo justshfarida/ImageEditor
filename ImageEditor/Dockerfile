@@ -27,8 +27,6 @@ RUN pip install --upgrade pip \
 # Copy application source code
 COPY . /app/
 
-RUN mkdir -p /var/log/django && touch /var/log/django/django.log
-
 # Ensure static files are served from the correct directory
 RUN mkdir -p /app/static /app/media
 
