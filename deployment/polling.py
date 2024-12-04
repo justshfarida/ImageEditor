@@ -13,7 +13,7 @@ DOCKER_HUB_REPO = "skibidi05/django"
 SERVICE_NAME = "skibidi"  # Swarm service name
 CHECK_INTERVAL = 60  # in seconds
 
-def get_latest_tag():
+def get_latest_tag(): 
     """Fetch the latest tag of the Docker image from Docker Hub."""
     url = f"https://hub.docker.com/v2/repositories/{DOCKER_HUB_REPO}/tags/"
     try:
