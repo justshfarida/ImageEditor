@@ -30,7 +30,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "4000:4000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin  # Use Docker secrets
     depends_on:

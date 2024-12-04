@@ -3,9 +3,10 @@ from django.db.models.signals import pre_delete
 import cloudinary
 from cloudinary.models import CloudinaryField
 from django.dispatch import receiver
+from django_prometheus.models import ExportModelOperationsMixin
 
 # Create your models here.
-class Image(models.Model):
+class Image(ExportModelOperationsMixin('image'), models.Model):
     '''
     Creates an image model.
     '''

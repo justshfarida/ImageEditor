@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'qr_module.apps.QrModuleConfig',
+    'django_prometheus',
 
     # Media Cloudinary
     'cloudinary',
@@ -59,7 +60,7 @@ INSTALLED_APPS = [
     # define ocr app
     'ocr.apps.OcrConfig',
     
-     "palette",
+    "palette",
 
 ]
 
@@ -71,6 +72,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]   
 
 ROOT_URLCONF = "ImageEditor.urls"

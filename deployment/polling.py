@@ -9,7 +9,7 @@ import os
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-DOCKER_HUB_REPO = "dzinski/django"
+DOCKER_HUB_REPO = "skibidi05/django"
 SERVICE_NAME = "skibidi"  # Swarm service name
 CHECK_INTERVAL = 60  # in seconds
 
