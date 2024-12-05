@@ -20,7 +20,7 @@ services:
     networks:
       - backend
     volumes:
-      - /home/software_project/deployment/static:/app/static
+      - /home/software_project/deployment/static:/app/staticfiles
       - /home/software_project/deployment/media:/app/media
     deploy:
       replicas: 3
@@ -78,7 +78,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     ports:
-      - "4000:4000"
+      - "4000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin  # Use Docker secrets for better security
     depends_on:
