@@ -5,16 +5,6 @@ services:
     image: skibidi05/django:v1.0.0
     container_name: django_app
     restart: unless-stopped
-    # environment:
-    #   - SECRET_KEY=${SECRET_KEY}
-    #   - cloud_name=${cloud_name}
-    #   - api_key=${api_key}
-    #   - api_secret=${api_secret}
-    #   - DB_NAME=${DB_NAME}
-    #   - DB_USER=${DB_USER}
-    #   - DB_PASSWORD=${DB_PASSWORD}
-    #   - DB_HOST=${DB_HOST}
-    #   - DB_PORT=${DB_PORT}
     env_file:
       - .env
     ports:
@@ -29,6 +19,9 @@ services:
       retries: 3
     networks:
       - backend
+    volumes:
+      - /home/software_project/deployment/static:/app/static
+      - /home/software_project/deployment/media:/app/media
     deploy:
       replicas: 3
       restart_policy:

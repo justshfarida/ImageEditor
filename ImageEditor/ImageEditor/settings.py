@@ -17,14 +17,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-db_name = os.getenv('DB_NAME')
-db_user = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
-db_host = os.getenv('DB_HOST')
-db_port = os.getenv('DB_PORT', '5432')
-logging.warning(f'Database settings - NAME: {db_name}, USER: {db_user}, PASSWORD: {db_password}, HOST: {db_host}, PORT: {db_port}')
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -89,8 +81,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "templates",               # Main templates directory in ImageEditor
-            BASE_DIR / "qr_module" / "templates",  # templates directory inside qr_module
+            BASE_DIR / "templates",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -127,7 +118,7 @@ else:
             'NAME': os.getenv('DB_NAME'),
             'USER': os.getenv('DB_USER'),
             'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT', '5432'),
+            'PORT': os.getenv('DB_PORT'),
         }
     }
 
