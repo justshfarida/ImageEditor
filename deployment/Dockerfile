@@ -8,6 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 COPY polling.py .
 COPY .env .
+COPY docker-compose.yml .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt

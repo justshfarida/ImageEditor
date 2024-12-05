@@ -4,6 +4,7 @@ import docker
 import time
 from dotenv import load_dotenv
 import os
+import subprocess
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -12,7 +13,11 @@ logger = logging.getLogger(__name__)
 DOCKER_HUB_REPO = "skibidi05/django"
 STACK_NAME = "skibidi-stack"  # Swarm stack name
 CHECK_INTERVAL = 60  # in seconds
-COMPOSE_FILE_PATH = "./docker-compose.yml"  # Path to your docker-compose file
+
+current_directory = os.getcwd()
+COMPOSE_FILE_PATH = current_directory + "/docker-compose.yml"  # Path to your docker-compose file
+
+import re
 
 def get_latest_tag():
     """Fetch the latest tag of the Docker image from Docker Hub."""
@@ -27,9 +32,40 @@ def get_latest_tag():
         logger.error(f"Error fetching tags from Docker Hub: {e}")
         return None
 
+def update_compose_file(tag):
+    """Update the docker-compose.yml file with the new image tag."""
+    try:
+        # Read the existing docker-compose.yml
+        with open(COMPOSE_FILE_PATH, 'r') as file:
+            compose_content = file.read()
+        
+        current_tag_pattern = re.compile(rf"{DOCKER_HUB_REPO}:(\S+)")
+        match = current_tag_pattern.search(compose_content)
+        if match:
+            current_tag = match.group(1)
+            # Replace the current tag with the new tag
+            new_content = compose_content.replace(
+                f"{DOCKER_HUB_REPO}:{current_tag}", f"{DOCKER_HUB_REPO}:{tag}"
+            )
+
+            # Write the updated content back to the docker-compose.yml
+            with open(COMPOSE_FILE_PATH, 'w') as file:
+                file.write(new_content)
+            logger.info(f"Updated docker-compose.yml with tag {tag}.")
+        else:
+            logger.error("Current tag not found in docker-compose.yml.")
+    except Exception as e:
+        logger.error(f"Error updating docker-compose.yml: {e}")
+
 def update_stack(tag):
     """Update the stack with the new image tag."""
     client = docker.from_env()
+    
+    try:
+        client.swarm.init()
+        print("Swarm initialized successfully!")
+    except docker.errors.APIError as e:
+        print(f"Error initializing Swarm: {e}")
     
     # Modify the docker-compose.yml file with the new tag dynamically
     try:
@@ -41,35 +77,24 @@ def update_stack(tag):
 
         # Deploy the updated stack
         logger.info(f"Deploying the stack {STACK_NAME} with the updated image {tag}")
-        client.stacks.deploy(
-            name=STACK_NAME,
-            compose_file=open(COMPOSE_FILE_PATH, 'r').read(),
-            compose_file_override=True  # Ensures it deploys the updated file
-        )
+        command = [
+            'docker', 'stack', 'deploy',
+            '--compose-file', COMPOSE_FILE_PATH,
+            '--resolve-image', 'changed',
+            STACK_NAME
+        ]
+        
+        result = subprocess.run(command, capture_output=True, text=True)
+        
+        if result.returncode != 0:
+            print(f"Error: {result.stderr}")
+        else:
+            print(f"Success: {result.stdout}")
         logger.info(f"Stack {STACK_NAME} updated successfully with the new image {tag}.")
     except docker.errors.APIError as e:
         logger.error(f"Error pulling image or deploying stack: {e}")
     except Exception as e:
         logger.error(f"Error during stack update: {e}")
-
-def update_compose_file(tag):
-    """Update the docker-compose.yml file with the new image tag."""
-    try:
-        # Read the existing docker-compose.yml
-        with open(COMPOSE_FILE_PATH, 'r') as file:
-            compose_content = file.read()
-        
-        # Replace the image tag in the docker-compose.yml content
-        new_content = compose_content.replace(
-            f"{DOCKER_HUB_REPO}:latest", f"{DOCKER_HUB_REPO}:{tag}"
-        )
-
-        # Write the updated content back to the docker-compose.yml
-        with open(COMPOSE_FILE_PATH, 'w') as file:
-            file.write(new_content)
-        logger.info(f"Updated docker-compose.yml with tag {tag}.")
-    except Exception as e:
-        logger.error(f"Error updating docker-compose.yml: {e}")
 
 def main():
     load_dotenv()
