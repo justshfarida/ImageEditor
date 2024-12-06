@@ -27,8 +27,8 @@ services:
       restart_policy:
         condition: on-failure
       update_config:
-        parallelism: 2
-        delay: 10s
+        parallelism: 1
+        delay: 60s
         failure_action: rollback
         monitor: 60s
         max_failure_ratio: 0.1
@@ -80,7 +80,9 @@ services:
     ports:
       - "4000:3000"
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin  # Use Docker secrets for better security
+      - GF_SERVER_ROOT_URL=https://yourdomain.com/monitor/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SECURITY_ADMIN_PASSWORD=sigma
     depends_on:
       - prometheus
     volumes:
