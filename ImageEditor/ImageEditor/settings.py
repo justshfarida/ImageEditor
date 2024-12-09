@@ -31,9 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ["*"]
-CORS_ALLOW_ALL_ORIGINS = True
-
-CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "http://localhost:8000"]
+CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "chat.ufaz.az", "http://chat.ufaz.az", "https://chat.ufaz.az/"]
 
 # Application definition
 
@@ -46,7 +44,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'qr_module.apps.QrModuleConfig',
     'django_prometheus',
-    'corsheaders',
 
     # Media Cloudinary
     'cloudinary',
@@ -69,7 +66,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
