@@ -31,7 +31,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "chat.ufaz.az", "http://chat.ufaz.az", "https://chat.ufaz.az/"]
+# CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "chat.ufaz.az", "http://chat.ufaz.az", "https://chat.ufaz.az/"]
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 # Application definition
 
