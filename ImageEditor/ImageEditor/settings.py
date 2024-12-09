@@ -33,6 +33,8 @@ DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "http://localhost:8000"]
+
 # Application definition
 
 INSTALLED_APPS = [
