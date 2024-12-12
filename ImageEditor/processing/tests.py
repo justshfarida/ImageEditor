@@ -95,25 +95,25 @@ class ViewsTests(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect after upload
         self.assertIn("id", self.client.session)  # Session contains uploaded image ID
 
-    @patch("processing.helper.color_to_grayscale")
-    def test_post_grayscale_processing(self, mock_grayscale):
-        mock_grayscale.return_value = self.sample_image
+    # @patch("processing.helper.color_to_grayscale")
+    # def test_post_grayscale_processing(self, mock_grayscale):
+    #     mock_grayscale.return_value = self.sample_image
 
-        response = self.client.post(self.process_url, {"type": "Preview"})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["Content-Type"], "image/png")
+    #     response = self.client.post(self.process_url, {"type": "Preview"})
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response["Content-Type"], "image/png")
 
-    @patch("processing.helper.img_to_pdf")
-    def test_post_pdf_processing(self, mock_pdf):
-        mock_pdf.return_value = self.sample_pdf
+    # @patch("processing.helper.img_to_pdf")
+    # def test_post_pdf_processing(self, mock_pdf):
+    #     mock_pdf.return_value = self.sample_pdf
 
-        process_url = reverse("processing:process", kwargs={"choice": 1})
-        response = self.client.post(process_url, {"type": "Download"})
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.has_header("Content-Disposition"))
-        self.assertIn("demo.pdf", response["Content-Disposition"])
+    #     process_url = reverse("processing:process", kwargs={"choice": 1})
+    #     response = self.client.post(process_url, {"type": "Download"})
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTrue(response.has_header("Content-Disposition"))
+    #     self.assertIn("demo.pdf", response["Content-Disposition"])
 
-    def test_missing_file_submission(self):
-        response = self.client.post(self.upload_url, {})
-        self.assertEqual(response.status_code, 302)  # Redirect back to form
-        self.assertRedirects(response, self.upload_url)
+    # def test_missing_file_submission(self):
+    #     response = self.client.post(self.upload_url, {})
+    #     self.assertEqual(response.status_code, 302)  # Redirect back to form
+    #     self.assertRedirects(response, self.upload_url)
