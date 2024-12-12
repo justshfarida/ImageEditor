@@ -11,7 +11,6 @@ django = "^5.1.3"
 cloudinary = "^1.41.0"
 colorthief = "^0.2.1"
 django-cloudinary-storage = "^0.3.0"
-easyocr = "^1.7.2"
 qrcode = "^8.0"
 requests = "^2.32.3"
 stegano = "^0.11.4"
@@ -19,7 +18,18 @@ django-crontab = "^0.7.1"
 django-environ = "^0.11.2"
 dj-database-url = "^2.3.0"
 python-dotenv = "^1.0.1"
+torch = {version = "^2.5.1+cpu", source = "pytorch_cpu"}
+torchvision = {version = "^0.20.1+cpu", source = "pytorch_cpu"}
+easyocr = "^1.7.2"
+gunicorn = "^23.0.0"
+django-prometheus = "^2.3.1"
+psycopg2 = "^2.9.10"
 
+
+[[tool.poetry.source]]
+name = "pytorch_cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

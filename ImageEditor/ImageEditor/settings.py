@@ -25,23 +25,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-xqg@8y^zwuf88(o$1xk-(oqo-pno2lqnob5+n$--*&zkrjkf-d"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://chat.ufaz.az", "http://chat.ufaz.az", "https://chat.ufaz.az/"]
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-    "django.contrib.messages",
+    "django.contrib.messages", 
     "django.contrib.staticfiles",
     'qr_module.apps.QrModuleConfig',
+    'django_prometheus',
 
     # Media Cloudinary
     'cloudinary',
@@ -59,7 +60,7 @@ INSTALLED_APPS = [
     # define ocr app
     'ocr.apps.OcrConfig',
     
-     "palette",
+    "palette",
 
 ]
 
@@ -67,10 +68,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    'core.middleware.DebugCsrfMiddleware',
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]   
 
 ROOT_URLCONF = "ImageEditor.urls"
@@ -78,8 +82,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "templates",               # Main templates directory in ImageEditor
-            BASE_DIR / "qr_module" / "templates",  # templates directory inside qr_module
+            BASE_DIR / "templates",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -99,10 +102,8 @@ WSGI_APPLICATION = "ImageEditor.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {}
-
 if DEBUG:
+    # Use SQLite for development or debugging
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -110,9 +111,17 @@ if DEBUG:
         }
     }
 else:
-    import dj_database_url
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-    DATABASES['default'] = dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    # Use PostgreSQL for production
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
 
 
 # Password validation
@@ -182,19 +191,34 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {name} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'django.log',
+            'formatter': 'verbose',
+        },
         'console': {
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
     },
     'loggers': {
-        '': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        },
         'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }
@@ -210,3 +234,9 @@ OCR_LANGUAGES = {
 }
 
 DEFAULT_OCR_LANG = "en"
+
+## Django Crontab Settings
+
+CRONJOBS = [
+    ('*/5 * * * *', 'django.core.management.call_command', ['delete-image'])
+]
