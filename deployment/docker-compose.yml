@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   django:
-    image: skibidi05/django:v1.0.0
+    image: skibidi05/django:v1.0.5
     container_name: django_app
     restart: unless-stopped
     env_file:
@@ -90,7 +90,7 @@ services:
     networks:
       - backend
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
       resources:
