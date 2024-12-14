@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="{% static 'css/palette.css' %}">
         <link rel="stylesheet" href="{% static 'css/media-query.css' %}">
         <link rel="stylesheet" href="{% static 'css/generate_qr.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select_choice.css' %}">
+        
         <link rel="stylesheet" href="{% static 'css/result.css' %}">
         <link rel="stylesheet" href="{% static 'css/background.css' %}">
         <link rel="stylesheet" href="{% static 'css/display_data.css' %}">
@@ -78,6 +80,11 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'ocr:upload' %}">
                                         <i class="fas fa-text-height"></i> OCR
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'processing:upload' %}">
+                                        <i class="fas fa-processing"></i> Image Processing
                                     </a>
                                 </li>
                                 <!-- Dropdown for QR Code -->

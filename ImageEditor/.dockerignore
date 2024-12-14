@@ -4,10 +4,6 @@ __pycache__
 *.pyo
 *.pyd
 
-# Django migrations (can be regenerated, but not necessary to include)
-**/migrations/*
-!**/migrations/__init__.py
-
 # Virtual environment directories
 venv/
 env/
