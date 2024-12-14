@@ -50,8 +50,13 @@ INSTALLED_APPS = [
 
     # Crontab
     'django_crontab',
+
+    # define processing app
+    'processing.apps.ProcessingConfig',
     # define core app   
     'core.apps.CoreConfig',
+    # define steganography app   
+    'steganography.apps.SteganographyConfig',
     # define ocr app
     'ocr.apps.OcrConfig',
     
