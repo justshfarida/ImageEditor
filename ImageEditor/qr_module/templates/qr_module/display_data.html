@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block body %}
-<div class="container">
-    <div class="w-100 d-block success-message">
-        <div class="alert alert-success text-center" role="alert">
-            Your QR Code Has Been Processed Successfully!
+<div class="success-container">
+    <div class="success-cover">
+        <h1 id="heading1">Your QR Code Has Been Processed Successfully!</h1>
+
+        <!-- Displaying the uploaded QR Code -->
+        <div class="image-container text-center">
+            <img src="{{ url }}" alt="Uploaded QR Code" class="img-fluid" />
         </div>
-    </div>
 
-    <!-- Displaying the uploaded image -->
-    <div class="image-container text-center">
-        <img src="{{ url }}" alt="Uploaded QR Code" class="img-fluid" style="max-width: 300px;">
-    </div>
+        <!-- Displaying the QR code data -->
+        <div class="data-container text-center">
+            <textarea id="qr-data-box" class="form-control" rows="5" readonly>{{ data }}</textarea>
+            <button type="button" id="copy-button" class="btn btn-primary mt-3">Copy QR Code Data</button>
+        </div>
 
-    <!-- Displaying the QR code data -->
-    <div class="mt-3 text-center">
-        <textarea id="qr-data-box" class="form-control" rows="5" readonly>{{ data }}</textarea>
-        <button type="button" id="copy-button" class="btn btn-primary mt-3">Copy QR Code Data</button>
+        <!-- Button for generating another QR code -->
+        <div class="text-center mt-4">
+            <a href="{% url 'qr_module:generate_qr' %}" class="btn btn-secondary">Generate Another QR Code</a>
+        </div>
     </div>
 </div>
 

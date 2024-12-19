@@ -1,0 +1,106 @@
+/* Global Style */
+.success-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.success-container {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 90vh; /* Reduced container height */
+}
+
+.success-container img {
+    max-width: 90%; /* Smaller QR code image */
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+.success-container h1 {
+    font-size: 2rem;
+    padding: 3% 0; /* Reduced padding */
+    text-align: center;
+}
+
+.data-container textarea {
+    max-width: 80%;
+    margin: 15px auto; /* Reduced margin */
+    border-radius: 8px;
+    padding: 12px; /* Reduced padding */
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 120px; /* Reduced height */
+}
+
+.success-container button {
+    background-color: #b02b27;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+    display: inline-block;
+}
+
+.success-container button:hover {
+    background-color: #8a2220;
+}
+
+.success-container .btn-secondary {
+    background-color: #4d4d4d;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.success-container .btn-secondary:hover {
+    background-color: #3a3a3a;
+}
+
+/* Container Cover (background grey area) */
+.success-cover {
+    background-color: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 5% 7%; /* Reduced padding */
+    width: 100%;
+    max-width: 700px; /* Limit max width */
+    border-radius: 10px;
+}
+
+/* Responsive Styling */
+@media (max-width: 767px) {
+    .success-container {
+        height: 100vh;
+    }
+    .success-cover
+    {
+        height: 100vh;
+    }
+    .success-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .data-container textarea {
+        max-width: 90%;
+        height: 100px;
+    }
+
+    .success-container img {
+        max-width: 70%;
+    }
+}

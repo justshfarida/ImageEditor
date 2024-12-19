@@ -1,0 +1,65 @@
+[33m1392819[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mFarida[m[33m)[m Merge branch 'main' of github.com:justshfarida/ImageEditor into Farida
+[33m16acf39[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #16 from justshfarida/deploy
+[33mcb54471[m Merge pull request #15 from justshfarida/db-cleaning
+[33m32f6443[m changed name
+[33mddbdc4f[m added gunicorn
+[33m8543470[m Update urls.py
+[33md8ad264[m added cleaning command
+[33m106fd24[m configs
+[33m7c262f0[m Merge branch 'main' of github.com:justshfarida/ImageEditor into Farida
+[33m9f4d6c4[m[33m ([m[1;31morigin/Farida[m[33m)[m tests adedd
+[33m172da91[m Merge pull request #13 from justshfarida/jenkins
+[33m57fa9aa[m fixed test
+[33m0f5c485[m Unit Tests of Qr Module
+[33ma73e892[m error
+[33mc66d452[m Merge pull request #12 from justshfarida/ocr-tests
+[33m4f513c2[m created tests for ocr
+[33m3016876[m Merge pull request #11 from justshfarida/docker
+[33m82cf446[m Delete requirements.txt
+[33mf743c52[m trying with requirements instead
+[33m908d42a[m fixed poetry and added dockerile
+[33m2084335[m Merge pull request #10 from justshfarida/Farida
+[33m6cd4fe6[m added separate page for qr
+[33m894b672[m fixed qr code dropdown
+[33m502c73b[m Refactored home page
+[33m0910258[m added qr css
+[33mbdc6cba[m Read Qr fixed
+[33me7aa709[m Merge branch 'main' of github.com:justshfarida/ImageEditor into Farida
+[33mc232698[m Added unit tests for palette
+[33m7bb093f[m Merge pull request #8 from justshfarida/upload-form
+[33mdd4ecdb[m changed ocr upload
+[33mdd4e433[m made upload into a template
+[33m86ae1a2[m Merge branch 'main' of github.com:justshfarida/ImageEditor into Farida
+[33m36d0d59[m Merge branch 'main' of github.com:justshfarida/ImageEditor into Farida
+[33m069adfa[m Merge pull request #6 from justshfarida/palette-fix
+[33m79e98bd[m Merge pull request #5 from justshfarida/poetry
+[33mdccd02c[m url fixed
+[33mfb77b54[m added poetry files
+[33mb8ad874[m Qr code Module
+[33ma70b8c5[m Merge pull request #4 from justshfarida/ayan-errors-fix
+[33m8a913b3[m added link to navbar
+[33m3fe1445[m fixed errors and css
+[33mce5d95c[m Merge pull request #3 from justshfarida/ayan
+[33mca2ea50[m Palette Generator
+[33m5a8d914[m Resolved merge conflict by keeping both changes in settings.py
+[33m99ab434[m Save changes before pulling from main
+[33maf2da6f[m Merge pull request #2 from justshfarida/ocr
+[33mc129bcd[m ocr done
+[33md41f545[m[33m ([m[1;31morigin/ocr[m[33m)[m Merge branch 'main' into ocr
+[33mc019248[m[33m ([m[1;32mmain[m[33m)[m Merge pull request #1 from justshfarida/core
+[33m57bdc19[m[33m ([m[1;31morigin/core[m[33m)[m working site. needs adjustments in the styling and fixing bugs with static
+[33m0b5abb8[m fixed urls
+[33m2e9dc41[m Update urls.py
+[33m885c8f2[m has errors, pasha check pls
+[33m5122991[m Merge branch 'core' of https://github.com/justshfarida/ImageEditor into core
+[33m8000b20[m moved everything to the right folder again,sorry
+[33mb261868[m Delete templates directory
+[33me838299[m moved templates to the right folder
+[33mc2743d1[m added url patterns to urls py
+[33mecd6f75[m added all needed files
+[33m7647f50[m added core
+[33ma512df0[m templates for site
+[33m35ee32d[m view otline
+[33m9e3c87e[m added ocr app
+[33mf4cb07a[m initial commit
+[33m3f7279d[m Initial commit
