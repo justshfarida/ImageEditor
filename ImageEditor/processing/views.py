@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-
 import cv2
 import numpy as np
 import urllib.request
@@ -10,10 +9,10 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from core.forms import ImageForm
-from processing.helper import blur, color_to_grayscale, clr_to_bw, decrypt_image, encrypt_image, img_to_pdf, resize, sharp
+from processing.helper import blur, color_to_grayscale, clr_to_bw, img_to_pdf, resize, sharp
 from core.models import Image
 
-CHOICES = ["Convert To GrayScale", "Convert To PDF", "Convert To Blur", "Convert To Black And White", "Resize Image", "Encrypt Image", "Decrypt Image","Sharpen Image"]
+CHOICES = ["Convert To GrayScale", "Convert To PDF", "Convert To Blur", "Convert To Black And White", "Resize Image", "Sharpen Image"]
 
 class ProcessImage(View):
     '''
@@ -54,10 +53,6 @@ class ProcessImage(View):
         elif choice == 4:
             img = resize(path)
         elif choice == 5:
-            img = encrypt_image(path)
-        elif choice == 6:
-            img = decrypt_image(path)
-        elif choice == 7:
             img = sharp(path)
         else:
             return HttpResponse("Invalid Option")

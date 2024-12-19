@@ -1,12 +1,35 @@
-.home-section {
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center; /* Vertically center content */
+  height: 100vh; /* Full viewport height */
+  justify-content: center; /* Space between left and right sections */
+  gap:5rem;
+}
+
+/* Base Image */
+.hero-image-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.images__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Hero Content (Text) and Filtered Images */
+.hero-content-container {
+  width: 50%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   padding: 20px;
 }
 
-.home-section__content {
-  font-size: 18px;
-  color: #333;
+
 }

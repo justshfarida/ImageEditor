@@ -8,4 +8,5 @@ app_name = "core"
 urlpatterns = [
     path('', HomeView.as_view(), name='index'),
     path('about', AboutView.as_view(), name='about'),
+    path('metrics/', views.metrics),
 ]

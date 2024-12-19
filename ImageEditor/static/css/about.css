@@ -1,39 +1,61 @@
+/* General container styling */
 .container-fluid {
   display: flex;
   flex-direction: column;
+  padding: 0 15px; /* Added padding for better spacing */
 }
-
+.nav-container
+{
+    flex-direction: row;
+}
+/* About Section */
 .about-section {
   display: flex;
   align-items: center;
-  background-size: 55%;
-  background-color: #f4f6f8;
   overflow: hidden;
   border-radius: 8px;
   padding: 20px;
 }
 
-.about-section__mission p,
-.about-section p {
-  text-align: left;
-  color: #333;
-}
-
-.inner-container h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
+/* About Section Heading */
+.about-section h1 {
+  font-size: 3rem; /* Larger heading for the About section */
   font-weight: bold;
+  color: var(--RED-500); /* Accent red color */
+  margin-bottom: 20px;
 }
 
-.text {
-  font-size: 14px;
-  color: #555;
+/* About Section Paragraph */
+.about-section p {
+  font-size: 16px; /* Larger font for better readability */
+  color: var(--GRAY-300); /* Text color in grey */
   line-height: 1.6;
   text-align: justify;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.about-section__stats {
-  background-color: #f4f6f8;
-  margin: 0;
+/* Mission Section Styling */
+.about-section__mission {
+  margin-top: 60px;
+  padding: 30px;
+  background-color: var(--GRAY-200); /* Slightly darker grey for contrast */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.about-section__mission h2 {
+  font-size: 2.5rem; /* Mission title size */
+  font-weight: 700;
+  color: var(--RED-600); /* Darker red accent */
+  margin-bottom: 15px;
+}
+
+.about-section__mission p {
+  font-size: 1.25rem;
+  color: var(--GRAY-400); /* Slightly lighter grey text */
+  line-height: 1.7;
+  text-align: left;
+}
+
+/* Text class for general text styling */
+.text {
 }

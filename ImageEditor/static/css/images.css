@@ -1,11 +1,8 @@
 img {
   border-radius: 10px;
-  width: 100%;
-  height: auto;
 }
 
 .images__image {
-  width: 21rem;
   height: auto;
   margin: 10px;
 }

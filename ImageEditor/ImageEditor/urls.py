@@ -37,6 +37,6 @@ urlpatterns = [
 >>>>>>> 346ac55ab8a13b128b710538ffd07fcacbd4d442
 ]
 
-if settings.DEBUG: 
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
