@@ -4,8 +4,7 @@ import cloudinary
 from cloudinary.models import CloudinaryField
 from django.dispatch import receiver
 
-# Create your models here.
-class SteganographyModel(models.Model):
+class Steg(models.Model):
     '''
     Creates an image model.
     '''
@@ -15,7 +14,7 @@ class SteganographyModel(models.Model):
     def __str__(self):
         return f"#{self.id} {self.img.public_id.rsplit('/')[-1]}"
 
-@receiver(pre_delete, sender=SteganographyModel)
+@receiver(pre_delete, sender=Steg)
 def photo_delete(sender, instance, **kwargs):
     '''
     Deletes the image.

@@ -1,3 +1,5 @@
 #upload_form_id {
-  width: 200%;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }

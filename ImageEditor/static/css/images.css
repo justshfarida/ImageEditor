@@ -2,17 +2,7 @@ img {
   border-radius: 10px;
 }
 
-.images {
-  padding: 2rem;
-}
-
 .images__image {
   height: auto;
-  margin: 1rem;
-}
-
-.images__image--result {
-  width: 20rem;
-  height: auto;
-  margin: 1rem;
+  margin: 10px;
 }

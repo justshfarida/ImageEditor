@@ -21,8 +21,8 @@
         <link rel="stylesheet" href="{% static 'css/palette.css' %}">
         <link rel="stylesheet" href="{% static 'css/media-query.css' %}">
         <link rel="stylesheet" href="{% static 'css/generate_qr.css' %}">
+        <link rel="stylesheet" href="{% static 'css/error.css' %}">
         <link rel="stylesheet" href="{% static 'css/select_choice.css' %}">
-        
         <link rel="stylesheet" href="{% static 'css/result.css' %}">
         <link rel="stylesheet" href="{% static 'css/background.css' %}">
         <link rel="stylesheet" href="{% static 'css/display_data.css' %}">
@@ -68,7 +68,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">
+                                    <a class="nav-link active" href="{% url 'steganography:upload' %}">
                                         <i class="fas fa-image"></i> Steganography
                                     </a>
                                 </li>

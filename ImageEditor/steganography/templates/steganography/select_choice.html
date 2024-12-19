@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="choices-container">
+    <!-- Display Uploaded Image -->
+    <div class="image-preview">
+        <img src="{{ object.img.url }}" alt="Uploaded Image" class="uploaded-image" />
+    </div>
+
+    <!-- Form for User Input and Choices -->
+    <div class="form-container">
+        <form method="post" action="{% url 'process' 0 %}" class="choices-form">
+            {% csrf_token %}
+
+            <!-- Secret Message Input -->
+            <div class="input-container">
+                <label for="messageInput" class="input-label">Enter Secret Message:</label>
+                <input 
+                    type="password" 
+                    id="messageInput" 
+                    name="message" 
+                    class="form-control secret-input" 
+                    placeholder="Enter your secret message">
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary choice-button">Process</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

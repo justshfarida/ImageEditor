@@ -3,8 +3,8 @@ from django.http import FileResponse, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
-from .forms import SteganographyForm
-from .models import SteganographyModel
+from steg.forms import StegForm
+from steg.models import Steg
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 import cv2
@@ -12,37 +12,45 @@ import numpy as np
 import urllib.request
 import requests
 
-from steganography.functions import hide_lsb, reveal_lsb
+from steg.functions import hide_lsb, reveal_lsb
 
-CHOICES_WITH_CLASSES = {"LSB Hide":"prevent", "LSB Reveal":""}
 CHOICES = ["LSB Hide", "LSB Reveal"]
 
-class ProcessImage(View):
-    def post(self, request, choice):
-        id = request.session.get("id")
-        obj = SteganographyModel.objects.get(id=id)
+CHOICES_WITH_CLASSES = {"LSB Hide":"prevent", "LSB Reveal":""}
 
-        # Retrieve the image
+class ProcessImage(View):
+    def get(self, request, choice):
+        # messages.success(request, "Updated successfully!")
+        return render(request, "steg/process.html")
+
+    def post(self, request, choice):
+
+        id = request.session.get("id")
+        obj = Steg.objects.get(id=id)
+
+        # Retrieving the image and storing it in memory
         url = obj.img.url
         req = urllib.request.urlopen(url)
         arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-        path = cv2.imdecode(arr, -1)  # Load image as it is
+        path = cv2.imdecode(arr, -1) # 'Load it as it is'
 
         content_type = "image/png"
-        file_name = "processed_image.png"
+        file_name = "demo.png"
         sec_msg = request.session.get("message", None)
-
-        # Process based on the choice
-        if choice == 0:  # LSB Hide
+        if choice == 0:
             img = hide_lsb(path, sec_msg)
-        elif choice == 1:  # LSB Reveal
+        elif choice == 1:
             msg, img = reveal_lsb(path)
-            return render(request, "steganography/reveal.html", {"msg": msg})
+            return render(request, "steg/reveal.html", context={"msg": msg})
+        elif choice == 4:
+            img = resize(path)
+        elif choice == 5:
+            img = encrypt_image(path)
         else:
             return HttpResponse("Invalid Option")
 
         option = request.POST.get("type")
-
+        
         if option == "Preview":
             image_data = img.getvalue()
             return HttpResponse(image_data, content_type=content_type)
@@ -55,13 +63,13 @@ class SelectChoice(View):
     def get(self, request):
 
         id = request.session.get("id")
-        obj = SteganographyModel.objects.get(id=id)
+        obj = Steg.objects.get(id=id)
         context={
                 "object": obj, 
                 "choices": CHOICES,
                 "choices_with_classes": CHOICES_WITH_CLASSES
                 }
-        return render(request, "steganography/select_choice.html", context)
+        return render(request, "steg/select_choice.html", context)
 
     def post(self, request):
 
@@ -70,26 +78,26 @@ class SelectChoice(View):
         if type:    
             choice_id = CHOICES.index(type)
             
-            return redirect((reverse_lazy("steganography:process", kwargs={"choice": choice_id})))
+            return redirect((reverse_lazy("steg:process", kwargs={"choice": choice_id})))
         else:
             return HttpResponse("Invalid Choice")
 
 class Upload(View):
     def get(self, request):
-        form = SteganographyForm()
+        form = StegForm()
         context = {
             "form": form,
         }
-        return render(request, "steganography/upload.html", context)
+        return render(request, "steg/upload.html", context)
     
     def post(self, request):
-        form = SteganographyForm(request.POST, request.FILES)
+        form = StegForm(request.POST, request.FILES)
 
         if form.is_valid():
             obj = form.save()
             request.session['id'] = obj.id     
 
-            return redirect(reverse_lazy("steganography:select-choice"))
+            return redirect(reverse_lazy("steg:select-choice"))
         else:
             messages.warning(request, 'Please select a Picture')
             return HttpResponseRedirect(request.path)
