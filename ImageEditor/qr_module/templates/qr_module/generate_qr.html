@@ -9,23 +9,23 @@
 
     <form method="post" class="form-grid">
         {% csrf_token %}
-        
+    
         <!-- QR Code Data Input -->
         <div class="form-group">
             <label for="{{ form.data.id_for_label }}">{{ form.data.label }}</label>
             {{ form.data }}
         </div>
-        
-        <!-- Foreground Color Selection -->
-        <div class="form-group">
-            <label for="id_fill_color">Select QR Code Color:</label>
-            <input type="color" id="id_fill_color" name="fill_color" value="#000000">
-        </div>
-        
-        <!-- Background Color Selection -->
-        <div class="form-group">
-            <label for="id_back_color">Select Background Color:</label>
-            <input type="color" id="id_back_color" name="back_color" value="#ffffff">
+    
+        <!-- Color Selection Group -->
+        <div class="color-group">
+            <div class="form-group">
+                <label for="id_fill_color">Select QR Code Color:</label>
+                <input type="color" id="id_fill_color" name="fill_color" value="#000000">
+            </div>
+            <div class="form-group">
+                <label for="id_back_color">Select Background Color:</label>
+                <input type="color" id="id_back_color" name="back_color" value="#ffffff">
+            </div>
         </div>
         
         <!-- Submit Button -->
@@ -33,5 +33,6 @@
             <button type="submit" class="upload-button">Generate QR Code</button>
         </div>
     </form>
+    
 </div>
 {% endblock body %}

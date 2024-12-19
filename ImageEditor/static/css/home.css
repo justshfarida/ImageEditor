@@ -1,14 +1,89 @@
-.home-section {
+/* Hero Section */
+.hero {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; /* Vertically center content */
+  height: 100vh; /* Full viewport height */
+  justify-content: center; /* Space between left and right sections */
+  gap:5rem;
+}
+
+/* Base Image */
+.hero-image-container {
+  width: 50%;
+  display: flex;
   justify-content: center;
 }
 
-.home-section__content {
-  font-size: 2rem;
+.images__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-.images__title {
-  font-size: 2rem;
+/* Hero Content (Text) and Filtered Images */
+.hero-content-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: left;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.5rem;
+}
+
+/* Filtered Images */
+.hero-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+}
+
+.hero-image {
+  width: 45%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 767px) {
+  .hero {
+    flex-direction: column; /* Stack sections vertically on mobile */
+    text-align: center;
+  }
+
+  .hero-image-container,
+  .hero-content-container {
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+  }
 }
